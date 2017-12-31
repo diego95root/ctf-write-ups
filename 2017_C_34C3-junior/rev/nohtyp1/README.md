@@ -33,7 +33,7 @@ ______________[[_____(*________) for ________ in _______________(_______________
 ____________________________(_________(__________,___________))[::-1])][::-1]==[160,155,208,160,190,215,237,134,210,126,212,222,224,238,128,
 240,164,213,183,192,162,178,163,162] and 'mo4r' in ___________ and '34C3_' in ___________ and ___________.split('_')[3] == 'tzzzz']()
 ```
-Parece que el número de símbolos ' _ ' indica las posiciones en las que hay que ir montando el puzzle. Sustituyo las primeras piezas de la parte superior y me sangro algunas partes para verlas mejor. Se me queda:"
+Parece que hay cierta equivalencia de espacios según la cantidad de símbolos `_` que tiene cada uno que parece tener coherencia en el puzzle. Sustituyo las primeras piezas de la parte superior y me sangro algunas partes para verlas mejor. Se me queda:"
 ```python
 entrada = input();
 _____=lambda ______,_______:______+(_______^21);
@@ -62,7 +62,7 @@ ______________[
 	)
 	][::-1]==[160,155,208,160,190,215,237,134,210,126,212,222,224,238,128,240,164,213,183,192,162,178,163,162] and 'mo4r' in entrada and '34C3_' in entrada and entrada.split('_')[3] == 'tzzzz']()
 ```
-En la primera linea hay huecos en los que hay que colocar nombres de parámetros. En la segunda, hay un diccionario construido con estccuturas 'lambda' que nunca he usado. Sigo simplificando:
+En la segunda linea hay huecos en los que hay que colocar nombres de parámetros. En la tercera, hay un diccionario de dos pares clave/valor construidas con estructuras 'lambda' (que por cierto nunca he usado). Sigo simplificando:
 ```python
 entrada = input();
 x = lambda y,z : y + (z ^ 21);
@@ -77,15 +77,15 @@ w[
 	[160,155,208,160,190,215,237,134,210,126,212,222,224,238,128,240,164,213,183,192,162,178,163,162] and 'mo4r' in entrada and '34C3_' in entrada and entrada.split('_')[3] == 'tzzzz']()
 ```
 
-Parece que hay una comparación de listas, con varias condiciones. Para llegar a esto he tenido que entender el funcionamiento de algunas funciones y estructuras que no conocía y realizado varias pruebas de como se comportaban.
+Parece que hay una comparación de listas (`==`), con varias condiciones. Para llegar a este código he tenido que entender el funcionamiento de algunas funciones y estructuras que no conocía y realizado varias pruebas de como se comportaban.
 
-En este punto por fin entiendo que el objetivo es conseguir una entrada que al aplicarle las operaciones pertinentes, cumpla la comparación y se imprima 'Correct!'. Vamos a ello..
+En este punto por fin entiendo que el objetivo es conseguir un `input()` que al aplicarle las operaciones pertinentes, cumpla la comparación y se imprima 'Correct!'. Vamos a ello..
 
-Viendo las condiciones, es posible que la solución sea de la forma '34C3_mo4r_????????_tzzzz', ya que el texto de entrada debe contener '34C3_', 'mo4r' y '_tzzzz' (éste último situado en el cuarto split('_'), por lo que habrá mínimo 3 símbolos '_').
+Viendo las condiciones `'mo4r' in entrada`, `'34C3_' in entrada`, `entrada.split('_')[3] == 'tzzzz'`, se sabe que hay al menos 3 símbolos `_` y es posible que la solución sea de la forma `34C3_mo4r_????????_tzzzz` o similar
 
-Construyo el generador de resultados, que no es más que una operación de primer orden entre los valores ASCII de la entrada y su inverso. Y el resultado de ésto, invertido. Este paso corresponde al método 'generarNuevaListaInvertida(p_entrada)'.
+Construyo el generador de resultados, que no es más que una operación de primer orden entre los valores ASCII de la entrada y su inverso. Y el resultado de ésto, invertido. Este paso corresponde al método `generarNuevaListaInvertida(p_entrada)`.
 
-La peculiaridad del proceso es que hay una dependencia directa entre la posición 'i' del texto de entrada y la 'MAX-i', lo cual me indujo a problemas que a continuación comento. El código resultante (*warning: sin haber programado nada serio en python nunca*) es éste:
+La peculiaridad del proceso es que hay una dependencia directa entre la posición `i` del texto de entrada y la `MAX-i`, lo cual me indujo a problemas que a continuación comento. El código resultante (*warning: sin haber programado nada serio en python nunca*) es éste:
 ```python
 def generarNuevaListaInvertida(p_entrada):
 
@@ -148,7 +148,7 @@ print(entrada, 'entrada')
 print(listaCharsValidosPorPosicion , 'listaCharsValidosPorPosicion')
 ```
 
-El problema que he tenido, es que pretendía evaluar de manera absoluta cada par de posiciones, sin caer en que había condiciones globales que era imposible evaluar de ésta forma (dejo una traza de mi error comentada, para que se vea la *bullshit*). Tras algo más de trabajo genero un ciclo de ejecución (que corresponden al código que he dejado arriba), que me deja en la variable **listaCharsValidosPorPosicion** un vector de listas  **listaPosicion** para cada posición del texto de entrada que contienen pares de tuplas que validan la salida esperada con la lista **solucion**. Quedándome:
+El problema que he tenido es que pretendía evaluar de manera absoluta cada par de posiciones, sin caer en que había condiciones globales que era imposible evaluar de ésta forma (dejo una traza de mi error comentada, para que se vea la *bullshit*). Tras algo más de trabajo genero un ciclo de ejecución (que corresponde al código de arriba), que me deja en la variable `listaCharsValidosPorPosicion` un vector de listas  `listaPosicion` para cada posición del texto de entrada que contienen pares de tuplas que validan la salida esperada con la lista `solucion`. Quedándome:
 ```python
 [
 	[('C', 'J'), ('G', 'N'), ('K', 'B'), ('O', 'F'), ('S', 'Z'), ('3', 'z'), ('_', 'V')],
@@ -165,9 +165,9 @@ El problema que he tenido, es que pretendía evaluar de manera absoluta cada par
 	[('a', 'j'), ('c', 'h'), ('e', 'n'), ('g', 'l'), ('i', 'b'), ('m', 'f'), ('o', 'd'), ('s', 'x'), ('y', 'r')]
 ]
 ```
-Una vez obtengo las listas y a sabiendas que las respuestas válidas no son muchas, opto por analizar manualmente las posibles soluciones que **cumplan las condiciones globales**, teniendo en cuenta que a este nivel de complejidad de challs, la flag suele ser palabras en inglés con sustituciones con numeros.
+Una vez obtengo las listas y a sabiendas que las respuestas válidas no son muchas, opto por analizar manualmente las posibles soluciones que **cumplan las condiciones globales**, teniendo en cuenta que a este nivel de complejidad de challs, la flag suele ser palabras en inglés con sustituciones con números. Esta decisión puede parecer vaga, pero tiempo es mi enemigo.
 ```python
-----> patrón: '34C3_mo4r_????????_tzzzz'
+# patrón a seguir: '34C3_mo4r_????????_tzzzz'
 [
 	3 z	[('C', 'J'), ('G', 'N'), ('K', 'B'), ('O', 'F'), ('S', 'Z'), ('3', 'z'), ('_', 'V')],
 	4 z	[('v', '8'), ('w', '9'), ('D', 'J'), ('E', 'K'), ('F', 'H'), ('G', 'I'), ('L', 'B'), ('M', 'C'), ('O', 'A'), ('T', 'Z'), ('V', 'X'), ('W', 'Y'), ('4', 'z'), ('6', 'x'), ('7', 'y'), ('_', 'Q')],
